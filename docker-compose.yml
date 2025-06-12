@@ -1,5 +1,16 @@
 version: "3.9"
 services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: weather_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
   backend:
     build: ./backend
     ports:
@@ -8,6 +19,11 @@ services:
       - ./backend/.env
     volumes:
       - ./backend:/app
+    depends_on:
+      - db
+    environment:
+      # Ensures DATABASE_URL is available if not set in .env
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/weather_db
 
   frontend:
     build: ./frontend
@@ -15,3 +31,12 @@ services:
       - "3000:3000"
     stdin_open: true
     tty: true
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules  # Important: prevents node_modules from being overwritten
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+
+volumes:
+  postgres_data:

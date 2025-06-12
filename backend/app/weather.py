@@ -7,8 +7,10 @@ load_dotenv()
 
 API_KEY = os.getenv("WEATHER_API_KEY")
 BASE_URL = "https://api.openweathermap.org/data/2.5/weather"
+FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast"
 
 def get_weather(location):
+    """Get current weather for a location"""
     params = {
         'appid': API_KEY,
         'units': 'metric'
@@ -35,10 +37,8 @@ def get_weather(location):
         "wind_speed": data["wind"]["speed"]
     }
 
-print("WEATHER_API_KEY:", os.getenv("WEATHER_API_KEY"))
-
 def get_weather_data(location: str):
-    base_url = "https://api.openweathermap.org/data/2.5/forecast"
+    """Get 5-day forecast for a location"""
     params = {
         "appid": API_KEY,
         "units": "metric"
@@ -51,7 +51,7 @@ def get_weather_data(location: str):
     else:
         params['q'] = location
 
-    response = requests.get(base_url, params=params)
+    response = requests.get(FORECAST_URL, params=params)
     if response.status_code != 200:
         raise HTTPException(status_code=400, detail="Error fetching forecast data")
 

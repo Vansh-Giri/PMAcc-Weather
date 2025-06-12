@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import {
   getProfiles,
   deleteProfile,
-  exportProfilesCSV,
+  exportProfiles,
 } from "./api";
 import LocationForm from "./LocationForm";
 import LocationWeather from "./LocationWeather";
@@ -176,7 +176,7 @@ function Home() {
   try {
     console.log("Starting export...");
     
-    const res = await exportProfilesCSV();
+    const res = await exportProfiles();
     console.log("Export response:", res.data);
     
     // Convert JSON to text
@@ -249,7 +249,7 @@ function Home() {
 
           {locations.length > 0 && (
             <button onClick={handleExport} className="export-btn">
-              Export All as CSV
+              Export All
             </button>
           )}
 

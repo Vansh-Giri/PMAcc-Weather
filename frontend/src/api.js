@@ -8,6 +8,6 @@ export const updateProfile = (id, data) => axios.put(`${API_BASE}/profiles/${id}
 export const deleteProfile = (id) => axios.delete(`${API_BASE}/profiles/${id}`);
 export const getProfileWeather = (id) => axios.get(`${API_BASE}/profiles/${id}/weather`);
 export const getForecast = (location) => axios.get(`${API_BASE}/forecast`, { params: { location } });
-export const exportProfilesCSV = () => {
+export const exportProfiles = () => {
   return axios.get(`${API_BASE}/export`);
 };

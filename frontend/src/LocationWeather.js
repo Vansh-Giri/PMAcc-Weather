@@ -131,10 +131,6 @@ function LocationWeather({ location, onBack }) {
     map.setCenter(mapCenter);
   }, [mapCenter, location.location_name]);
 
-  const onMapError = useCallback(() => {
-    setMapError(true);
-    console.error("Google Maps failed to load");
-  }, []);
 
   const onLoadScriptLoad = useCallback(() => {
     console.log("LoadScript loaded for location:", location.location_name);
